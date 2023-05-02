@@ -1,0 +1,43 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - env
+
+
+spring:
+  #Database Configuration
+  datasource:
+    url: ${dbUrl}
+    username: ${dbUser}
+    password: ${dbPassword}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  #  AWS configuration
+  cloud:
+    aws:
+      secretsmanager:
+        region: us-east-2
+      credentials:
+        access-key: <KEY>
+        secret-key: <SECRET>
+
+  #      credentials:
+  #        profile:
+  #          name: localstack
+  config:
+    import:
+      - optional:aws-secretsmanager:secret/spring-boot-app
+
+server:
+    port: 8090
+
+actuator:
+    username: admin
+    secret: secret@2020
